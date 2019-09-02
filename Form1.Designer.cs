@@ -38,7 +38,6 @@
             this.richTextBoxIdProducts = new System.Windows.Forms.RichTextBox();
             this.richTextBoxId = new System.Windows.Forms.RichTextBox();
             this.naturalIds = new System.Windows.Forms.RichTextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
@@ -90,9 +89,8 @@
             this.label8.Cursor = System.Windows.Forms.Cursors.No;
             this.label8.Location = new System.Drawing.Point(422, 436);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 13);
+            this.label8.Size = new System.Drawing.Size(0, 13);
             this.label8.TabIndex = 14;
-            this.label8.Text = "Парсинг...";
             this.label8.Visible = false;
             // 
             // label2
@@ -136,15 +134,6 @@
             this.naturalIds.Size = new System.Drawing.Size(350, 179);
             this.naturalIds.TabIndex = 18;
             this.naturalIds.Text = "";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(96, 297);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 13);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Артикулы:";
             // 
             // label7
             // 
@@ -207,7 +196,6 @@
             this.Controls.Add(this.textBoxPathLinks);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.naturalIds);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.richTextBoxId);
@@ -236,7 +224,6 @@
         private System.Windows.Forms.RichTextBox richTextBoxIdProducts;
         private System.Windows.Forms.RichTextBox richTextBoxId;
         private System.Windows.Forms.RichTextBox naturalIds;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button3;

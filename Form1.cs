@@ -62,9 +62,7 @@ namespace ParserApp
             //stopwatch.Start();
             ParserConsole_2_.Parser.artsNatural = ParserConsole_2_.Parser.GetJewelriesWithNatural();
             ParserConsole_2_.Parser.links = ParserConsole_2_.Parser.GetLinks(textBoxPathLinks.Text);
-            var listId = naturalIds.Text.Split(',').ToArray();
-            if(listId!=null)
-                ParserConsole_2_.Parser.artsNatural.AddRange(listId);
+            
 
             //stopwatch.Stop();
             //stopwatch.Reset();
@@ -75,7 +73,7 @@ namespace ParserApp
 
             ParserConsole_2_.Parser.Parse();
 
-            listId = richTextBoxId.Text.Split(',').ToArray();
+            var listId = richTextBoxId.Text.Split(',').ToArray();
             if (listId != null)
                 MainClassWithLists.DeleteById(listId);
 
@@ -86,6 +84,11 @@ namespace ParserApp
 
             var result = Parallel.ForEach(MainClassWithLists.Jewelries.Select(p => p.IdProduct), ParserConsole_2_.Parser.GetMoreInformation);
 
+            listId = naturalIds.Text.Split(',').ToArray();
+            if (listId != null)
+                ParserConsole_2_.Parser.AddNaturalByStone(listId);
+
+            ParserConsole_2_.Parser.AddNaturalWord();
             ParserConsole_2_.Parser.AddCells(MainClassWithLists.Jewelries);
             ParserConsole_2_.Parser.EndExcel();
             //stopwatch.Stop();
@@ -129,6 +132,7 @@ namespace ParserApp
             textBoxPathLinks.Enabled = true;
             button3.Enabled = true;
             label4.Visible = false;
+            label8.Visible = false;
             //stopwatch.Stop();
             //label8.Text += "\nAdd descriptions" + stopwatch.Elapsed.Hours.ToString() + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
         }
