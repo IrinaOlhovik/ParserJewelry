@@ -136,5 +136,17 @@ namespace ParserApp
             //stopwatch.Stop();
             //label8.Text += "\nAdd descriptions" + stopwatch.Elapsed.Hours.ToString() + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Dispose(true);
+            Environment.Exit(Environment.ExitCode);
+            Application.Exit();
+        }
     }
 }

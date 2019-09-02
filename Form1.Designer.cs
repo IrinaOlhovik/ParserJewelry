@@ -207,6 +207,8 @@
             this.Controls.Add(this.textBoxPath);
             this.Name = "Form1";
             this.Text = "Парсер";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
