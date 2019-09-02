@@ -43,7 +43,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.textBoxPathLinks = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -179,30 +178,18 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Cursor = System.Windows.Forms.Cursors.No;
-            this.label4.Location = new System.Drawing.Point(647, 484);
+            this.label4.Location = new System.Drawing.Point(647, 479);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 13);
             this.label4.TabIndex = 23;
             this.label4.Text = "Парсинг...";
             this.label4.Visible = false;
             // 
-            // button4
-            // 
-            this.button4.Cursor = System.Windows.Forms.Cursors.Help;
-            this.button4.Location = new System.Drawing.Point(712, 445);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 24;
-            this.button4.Text = "Стоп";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(794, 506);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button3);
@@ -244,7 +231,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBoxPathLinks;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button4;
     }
 }
 
