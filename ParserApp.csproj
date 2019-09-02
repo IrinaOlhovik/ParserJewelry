@@ -84,10 +84,6 @@
       <Project>{5514478f-3754-4ec7-90ee-ee0934a0c37f}</Project>
       <Name>ParserConsole%282%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Parser\Parser.csproj">
-      <Project>{d31e6882-bc26-424f-bf57-0539a5bf10c3}</Project>
-      <Name>Parser</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

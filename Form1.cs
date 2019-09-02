@@ -58,18 +58,18 @@ namespace ParserApp
             var path = textBoxPath.Text;
             MainClassWithLists.Jewelries = new List<Jewelry>();
             //MainClassWithLists.AddTemp = new List<Jewelry>();
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            //Stopwatch stopwatch = new Stopwatch();
+            //stopwatch.Start();
             ParserConsole_2_.Parser.artsNatural = ParserConsole_2_.Parser.GetJewelriesWithNatural();
             ParserConsole_2_.Parser.links = ParserConsole_2_.Parser.GetLinks(textBoxPathLinks.Text);
             var listId = naturalIds.Text.Split(',').ToArray();
             if(listId!=null)
                 ParserConsole_2_.Parser.artsNatural.AddRange(listId);
 
-            stopwatch.Stop();
-            stopwatch.Reset();
-            label8.Text = "links + artsNatural" + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
-            stopwatch.Start();
+            //stopwatch.Stop();
+            //stopwatch.Reset();
+            //label8.Text = "links + artsNatural" + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
+            //stopwatch.Start();
 
             ParserConsole_2_.Parser.CreateOrUpdateExcel(path);
 
@@ -88,9 +88,9 @@ namespace ParserApp
 
             ParserConsole_2_.Parser.AddCells(MainClassWithLists.Jewelries);
             ParserConsole_2_.Parser.EndExcel();
-            stopwatch.Stop();
+            //stopwatch.Stop();
 
-            label8.Text += "\nExcel done" + stopwatch.Elapsed.Hours.ToString() + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
+            //label8.Text += "\nExcel done" + stopwatch.Elapsed.Hours.ToString() + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
             button1.UseWaitCursor = false;
             button1.Enabled = true;
             button2.Enabled = true;
@@ -104,12 +104,33 @@ namespace ParserApp
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            //Stopwatch stopwatch = new Stopwatch();
+            //stopwatch.Start();
+
+            label8.Visible = true;
+            label4.Visible = true;
+            button1.UseWaitCursor = true;
+            button1.Enabled = false;
+            button2.Enabled = false;
+            richTextBoxId.Enabled = false;
+            richTextBoxIdProducts.Enabled = false;
+            naturalIds.Enabled = false;
+            textBoxPathLinks.Enabled = false;
+            button3.Enabled = false;
             ParserConsole_2_.Parser.links = ParserConsole_2_.Parser.GetLinks(textBoxPathLinks.Text);
             var result = Parallel.ForEach(MainClassWithLists.Jewelries.Select(p => p.IdProduct), ParserConsole_2_.Parser.GetDescription);
-            stopwatch.Stop();
-            label8.Text += "\nAdd descriptions" + stopwatch.Elapsed.Hours.ToString() + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
+
+            button1.UseWaitCursor = false;
+            button1.Enabled = true;
+            button2.Enabled = true;
+            richTextBoxId.Enabled = true;
+            richTextBoxIdProducts.Enabled = true;
+            naturalIds.Enabled = true;
+            textBoxPathLinks.Enabled = true;
+            button3.Enabled = true;
+            label4.Visible = false;
+            //stopwatch.Stop();
+            //label8.Text += "\nAdd descriptions" + stopwatch.Elapsed.Hours.ToString() + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
         }
     }
 }
