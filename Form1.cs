@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -24,35 +25,56 @@ namespace ParserApp
             label10.Location = new Point(422, 397);
             label10.TabIndex = 23;
             label10.Margin = new Padding(3, 0, 3, 0);
+            label10.Text = "Text";
+            label10.Visible = true;
             Controls.Add(label10);
+            backgroundWorker1 = new BackgroundWorker();
+            backgroundWorker1.WorkerReportsProgress = true;
+            backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
+            backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
+            backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
         }
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
 
+        }
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            var bw = sender as BackgroundWorker;
+            bool work = true;
+            while(work)
+            {
+                Thread.Sleep(1000);
+                var i = ParserConsole_2_.Parser.indexAdd;
+                var total = MainClassWithLists.Jewelries.Count;
+                if (i == total)
+                {
+                    work = false;
+                    bw.CancelAsync();
+                }
+                lock(label10)
+                {
+                    bw.ReportProgress(1, i);
+                }
+
+            }
+        }
+        private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = int.Parse(e.UserState.ToString());
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
-
-            //Выводим диалоговое окно для выбора каталога.
-            // Данный класс возвращает следующие значения:
-            // 1) Объект System.Windows.Forms.DialogResult.OK, 
-            //    если пользователь нажимает кнопку 
-            //    ОК в диалоговом окне;
-            // 2) Объект System.Windows.Forms.DialogResult.Cancel,  
-            //    если пользователь закрывает диалоговое окно.
             DialogResult result = fbd.ShowDialog();
-
-            //Если пользователь выбрал директорию
-            //и нажал ОК, то выводим путь в textBox1
             if (result == DialogResult.OK)
             {
-                //Вывод пути к  
-                //выбранной директории 
                 textBoxPath.Text = fbd.SelectedPath;
             }
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
-
             label8.Visible = true;
             label4.Visible = true;
             //button1.UseWaitCursor = true;
@@ -89,10 +111,12 @@ namespace ParserApp
 
             if (listId != null)
                 MainClassWithLists.DeleteByIdProduct(listId);
-            
+
+            progressBar1.Maximum = MainClassWithLists.Jewelries.Count;
+            backgroundWorker1.RunWorkerAsync();
 
             var result = Parallel.ForEach(MainClassWithLists.Jewelries.Select(p => p.IdProduct),
-                ParserConsole_2_.Parser.GetMoreInformation);
+                    ParserConsole_2_.Parser.GetMoreInformation);
 
            
             listId = naturalIds.Text.Split(',').ToArray();
@@ -107,20 +131,20 @@ namespace ParserApp
             label8.Text += "\nExcel done" + stopwatch.Elapsed.Hours.ToString() + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
             //button1.UseWaitCursor = false;
             button1.Enabled = true;
-            button2.Enabled = true;
-            richTextBoxId.Enabled = true;
-            richTextBoxIdProducts.Enabled = true;
             naturalIds.Enabled = true;
+            richTextBoxIdProducts.Enabled = true;
             textBoxPathLinks.Enabled = true;
+            richTextBoxId.Enabled = true;
+            button2.Enabled = true;
             button3.Enabled = true;
             label4.Visible = false;
         }
-
         private void button3_Click(object sender, EventArgs e)
         {
             Stopwatch stopwatch = new Stopwatch();
+            
             stopwatch.Start();
-
+            label10.Visible = true;
             label8.Visible = true;
             label4.Visible = true;
             //button1.UseWaitCursor = true;
@@ -133,7 +157,10 @@ namespace ParserApp
             button3.Enabled = false;
             ParserConsole_2_.Parser.links = ParserConsole_2_.Parser.GetLinks(textBoxPathLinks.Text);
             
-            var result = Parallel.ForEach(MainClassWithLists.Jewelries.Select(p => p.IdProduct), ParserConsole_2_.Parser.GetDescription);
+            var result = Parallel.ForEach(MainClassWithLists.Jewelries.Select(p => p.IdProduct),i => {
+  
+                ParserConsole_2_.Parser.GetDescription(i);
+                });
             
             //button1.UseWaitCursor = false;
             button1.Enabled = true;
@@ -148,48 +175,37 @@ namespace ParserApp
             stopwatch.Stop();
             label8.Text += "\nAdd descriptions" + stopwatch.Elapsed.Hours.ToString() + stopwatch.Elapsed.Minutes.ToString() + " - " + stopwatch.Elapsed.Seconds.ToString();
         }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            var txtNumbers = richTextBoxIdProducts.Text;
-            using (TextWriter textWriter = new StreamWriter("fileaidProducts.txt"))
-            {
-                textWriter.WriteLine(txtNumbers);
-                
-            }
-            txtNumbers = richTextBoxId.Text;
-            using(TextWriter textWriter=new StreamWriter("fileId.txt"))
-            {
-                textWriter.WriteLine(txtNumbers);
-            }
-            txtNumbers = naturalIds.Text;
-            using (TextWriter textWriter = new StreamWriter("fileStones.txt"))
-            {
-                textWriter.WriteLine(txtNumbers);
-            }
-        }
-
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Dispose(true);
             Environment.Exit(Environment.ExitCode);
             Application.Exit();
         }
-
         private void button4_Click(object sender, EventArgs e)
         {
             Dispose(true);
             Environment.Exit(Environment.ExitCode);
             MainClassWithLists.Jewelries = new List<Jewelry>();
         }
-
-        
-
-        private static void IndexChange(int i)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            label10.Text = i.ToString();
-        }
+            var txtNumbers = richTextBoxIdProducts.Text;
+            using (TextWriter textWriter = new StreamWriter("fileaidProducts.txt"))
+            {
+                textWriter.WriteLine(txtNumbers);
 
+            }
+            txtNumbers = richTextBoxId.Text;
+            using (TextWriter textWriter = new StreamWriter("fileId.txt"))
+            {
+                textWriter.WriteLine(txtNumbers);
+            }
+            txtNumbers = naturalIds.Text;
+            using (TextWriter textWriter = new StreamWriter("fileStones.txt", false, Encoding.ASCII))
+            {
+                textWriter.WriteLine(txtNumbers);
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             string text = "";
@@ -203,7 +219,7 @@ namespace ParserApp
                 text = textReader.ReadToEnd();
             }
             richTextBoxIdProducts.Text = text;
-            using (TextReader textReader = new StreamReader("fileStones.txt"))
+            using (TextReader textReader = new StreamReader("fileStones.txt",Encoding.ASCII))
             {
                 text = textReader.ReadToEnd();
             }
