@@ -98,8 +98,7 @@ namespace ParserApp
 
             if (listId != null)
                 MainClassWithLists.DeleteByIdProduct(listId);
-
-            MessageBox.Show(MainClassWithLists.Jewelries.Count.ToString());
+            
             progressBar1.Maximum = MainClassWithLists.Jewelries.Count;
 
             backgroundWorker1.RunWorkerAsync();
