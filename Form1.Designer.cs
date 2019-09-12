@@ -172,9 +172,7 @@
             this.textBoxPathLinks.Name = "textBoxPathLinks";
             this.textBoxPathLinks.Size = new System.Drawing.Size(350, 20);
             this.textBoxPathLinks.TabIndex = 20;
-            this.textBoxPathLinks.Text = "https://amoresilver.kz/yandex_market.xml?hash_tag=13d4fc6fa705dbed0d972cc62cea8e9" +
-    "c&sales_notes=&product_ids=&group_ids=&label_ids=&exclude_fields=&html_descripti" +
-    "on=0&yandex_cpa=&process_presence_sure=";
+            this.textBoxPathLinks.Text = "yandex_market.xml";
             // 
             // label4
             // 

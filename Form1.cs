@@ -16,53 +16,29 @@ namespace ParserApp
 {
     public partial class Form1 : Form
     {
-        public static int index = 0;
-        public static Label label10 = new Label();
+        private readonly SynchronizationContext synchronizationContext;
+        private DateTime dt = DateTime.Now;
         public Form1()
         {
             InitializeComponent();
-            label10.Size = new Size(59, 13);
-            label10.Location = new Point(422, 397);
-            label10.TabIndex = 23;
-            label10.Margin = new Padding(3, 0, 3, 0);
-            label10.Text = "Text";
-            label10.Visible = true;
-            Controls.Add(label10);
+            synchronizationContext = SynchronizationContext.Current;
             backgroundWorker1 = new BackgroundWorker();
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
             backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
             backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
-            backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
-        }
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-
         }
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            var bw = sender as BackgroundWorker;
-            bool work = true;
-            while(work)
-            {
-                Thread.Sleep(1000);
-                var i = ParserConsole_2_.Parser.indexAdd;
-                var total = MainClassWithLists.Jewelries.Count;
-                if (i == total)
-                {
-                    work = false;
-                    bw.CancelAsync();
-                }
-                lock(label10)
-                {
-                    bw.ReportProgress(1, i);
-                }
+            var result = Parallel.ForEach(MainClassWithLists.Jewelries.Select(p => p.IdProduct),
+                  ParserConsole_2_.Parser.GetMoreInformation);
 
-            }
+            backgroundWorker1.CancelAsync();
+           
         }
         private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-            progressBar1.Value = int.Parse(e.UserState.ToString());
+           
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -73,7 +49,18 @@ namespace ParserApp
                 textBoxPath.Text = fbd.SelectedPath;
             }
         }
-        private void button2_Click(object sender, EventArgs e)
+        private void UpdateUI(int i)
+        {
+            var timenow = DateTime.Now;
+            if ((DateTime.Now - dt).Milliseconds <= 50)
+                return;
+            synchronizationContext.Post(new SendOrPostCallback(o =>
+            {
+                progressBar1.Value = (int)o;
+            }), i);
+            dt = timenow;
+        }
+        private async void button2_Click(object sender, EventArgs e)
         {
             label8.Visible = true;
             label4.Visible = true;
@@ -112,13 +99,27 @@ namespace ParserApp
             if (listId != null)
                 MainClassWithLists.DeleteByIdProduct(listId);
 
+            MessageBox.Show(MainClassWithLists.Jewelries.Count.ToString());
             progressBar1.Maximum = MainClassWithLists.Jewelries.Count;
+
             backgroundWorker1.RunWorkerAsync();
+            var work = true;
+            await Task.Run(() =>
+            {
+                while (work)
+                {
+                    if (ParserConsole_2_.Parser.indexAdd == MainClassWithLists.Jewelries.Count)
+                    {
+                        backgroundWorker1.CancelAsync();
+                        work = false;
+                    }
+                    UpdateUI(ParserConsole_2_.Parser.indexAdd);
+                    //progressBar1.Value = ParserConsole_2_.Parser.indexAdd;
+                }
+            });
+          
 
-            var result = Parallel.ForEach(MainClassWithLists.Jewelries.Select(p => p.IdProduct),
-                    ParserConsole_2_.Parser.GetMoreInformation);
-
-           
+         
             listId = naturalIds.Text.Split(',').ToArray();
             if (listId != null)
                 ParserConsole_2_.Parser.AddNaturalByStone(listId);
@@ -144,7 +145,6 @@ namespace ParserApp
             Stopwatch stopwatch = new Stopwatch();
             
             stopwatch.Start();
-            label10.Visible = true;
             label8.Visible = true;
             label4.Visible = true;
             //button1.UseWaitCursor = true;
@@ -161,7 +161,10 @@ namespace ParserApp
   
                 ParserConsole_2_.Parser.GetDescription(i);
                 });
-            
+
+            ParserConsole_2_.Parser.CreateOrUpdateExcel(textBoxPath.Text);
+            ParserConsole_2_.Parser.AddCells(MainClassWithLists.Jewelries);
+            ParserConsole_2_.Parser.EndExcel();
             //button1.UseWaitCursor = false;
             button1.Enabled = true;
             button2.Enabled = true;
@@ -201,7 +204,7 @@ namespace ParserApp
                 textWriter.WriteLine(txtNumbers);
             }
             txtNumbers = naturalIds.Text;
-            using (TextWriter textWriter = new StreamWriter("fileStones.txt", false, Encoding.ASCII))
+            using (TextWriter textWriter = new StreamWriter("fileStones.txt", false, Encoding.UTF8))
             {
                 textWriter.WriteLine(txtNumbers);
             }
@@ -219,7 +222,7 @@ namespace ParserApp
                 text = textReader.ReadToEnd();
             }
             richTextBoxIdProducts.Text = text;
-            using (TextReader textReader = new StreamReader("fileStones.txt",Encoding.ASCII))
+            using (TextReader textReader = new StreamReader("fileStones.txt",Encoding.UTF8))
             {
                 text = textReader.ReadToEnd();
             }
