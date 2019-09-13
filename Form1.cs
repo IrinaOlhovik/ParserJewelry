@@ -123,7 +123,7 @@ namespace ParserApp
             if (listId != null)
                 ParserConsole_2_.Parser.AddNaturalByStone(listId);
 
-            ParserConsole_2_.Parser.AddNaturalWord();
+            ParserConsole_2_.Parser.AddNaturalWord(listId);
             ParserConsole_2_.Parser.AddCells(MainClassWithLists.Jewelries);
             ParserConsole_2_.Parser.EndExcel();
             //stopwatch.Stop();
