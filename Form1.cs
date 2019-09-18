@@ -194,23 +194,23 @@ namespace ParserApp
             var txtNumbers = richTextBoxIdProducts.Text;
             using (TextWriter textWriter = new StreamWriter("fileaidProducts.txt"))
             {
-                textWriter.WriteLine(txtNumbers);
+                textWriter.Write(txtNumbers);
 
             }
             txtNumbers = richTextBoxId.Text;
             using (TextWriter textWriter = new StreamWriter("fileId.txt"))
             {
-                textWriter.WriteLine(txtNumbers);
+                textWriter.Write(txtNumbers);
             }
             txtNumbers = naturalIds.Text;
             using (TextWriter textWriter = new StreamWriter("fileStones.txt", false, Encoding.UTF8))
             {
-                textWriter.WriteLine(txtNumbers);
+                textWriter.Write(txtNumbers);
             }
             txtNumbers = textBoxPath.Text;
             using (TextWriter textWriter = new StreamWriter("path.txt", false, Encoding.UTF8))
             {
-                textWriter.WriteLine(txtNumbers);
+                textWriter.Write(txtNumbers);
             }
         }
         private void Form1_Load(object sender, EventArgs e)
