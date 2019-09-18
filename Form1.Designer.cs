@@ -63,7 +63,7 @@
             this.textBoxPath.Name = "textBoxPath";
             this.textBoxPath.Size = new System.Drawing.Size(428, 20);
             this.textBoxPath.TabIndex = 6;
-            this.textBoxPath.Text = "C:\\Users\\Admin\\Desktop";
+            this.textBoxPath.Text = "C:\\Users\\MI\\Downloads\\Парсер";
             // 
             // label1
             // 

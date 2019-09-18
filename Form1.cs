@@ -207,6 +207,11 @@ namespace ParserApp
             {
                 textWriter.WriteLine(txtNumbers);
             }
+            txtNumbers = textBoxPath.Text;
+            using (TextWriter textWriter = new StreamWriter("path.txt", false, Encoding.UTF8))
+            {
+                textWriter.WriteLine(txtNumbers);
+            }
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -226,6 +231,11 @@ namespace ParserApp
                 text = textReader.ReadToEnd();
             }
             naturalIds.Text = text;
+            using (TextReader textReader = new StreamReader("path.txt", Encoding.UTF8))
+            {
+                text = textReader.ReadToEnd();
+            }
+            textBoxPath.Text = text;
         }
     }
 }
