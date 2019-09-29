@@ -18,6 +18,7 @@ namespace ParserApp
     {
         private readonly SynchronizationContext synchronizationContext;
         private DateTime dt = DateTime.Now;
+        bool work = true;
         public Form1()
         {
             InitializeComponent();
@@ -32,7 +33,7 @@ namespace ParserApp
         {
             var result = Parallel.ForEach(MainClassWithLists.Jewelries.Select(p => p.IdProduct),
                   ParserConsole_2_.Parser.GetMoreInformation);
-
+            work = false;
             backgroundWorker1.CancelAsync();
            
         }
@@ -102,7 +103,7 @@ namespace ParserApp
             progressBar1.Maximum = MainClassWithLists.Jewelries.Count;
 
             backgroundWorker1.RunWorkerAsync();
-            var work = true;
+            
             await Task.Run(() =>
             {
                 while (work)
