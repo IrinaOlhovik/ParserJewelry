@@ -89,7 +89,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Cursor = System.Windows.Forms.Cursors.No;
-            this.label8.Location = new System.Drawing.Point(422, 436);
+            this.label8.Location = new System.Drawing.Point(422, 409);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(0, 13);
             this.label8.TabIndex = 14;
