@@ -73,7 +73,9 @@ namespace ParserApp
             naturalIds.Enabled = false;
             textBoxPathLinks.Enabled = false;
             button3.Enabled = false;
+            textBoxLink.Enabled = false;
             var path = textBoxPath.Text;
+            ParserConsole_2_.Parser.url = textBoxLink.Text;
             MainClassWithLists.Jewelries = new List<Jewelry>();
            // MainClassWithLists.AddTemp = new List<Jewelry>();
             Stopwatch stopwatch = new Stopwatch();
@@ -138,6 +140,7 @@ namespace ParserApp
             richTextBoxId.Enabled = true;
             button2.Enabled = true;
             button3.Enabled = true;
+            textBoxLink.Enabled = true;
             label4.Visible = false;
         }
         private void button3_Click(object sender, EventArgs e)
@@ -153,6 +156,7 @@ namespace ParserApp
             richTextBoxId.Enabled = false;
             richTextBoxIdProducts.Enabled = false;
             naturalIds.Enabled = false;
+            textBoxLink.Enabled = false;
             textBoxPathLinks.Enabled = false;
             button3.Enabled = false;
             ParserConsole_2_.Parser.links = ParserConsole_2_.Parser.GetLinks(textBoxPathLinks.Text);
@@ -173,6 +177,7 @@ namespace ParserApp
             naturalIds.Enabled = true;
             textBoxPathLinks.Enabled = true;
             button3.Enabled = true;
+            textBoxLink.Enabled = true;
             label4.Visible = false;
             label8.Visible = false;
             stopwatch.Stop();
@@ -211,6 +216,8 @@ namespace ParserApp
             txtNumbers = textBoxPath.Text;
             using (TextWriter textWriter = new StreamWriter("path.txt", false, Encoding.UTF8))
             {
+                textWriter.WriteLine(txtNumbers);
+                txtNumbers = textBoxLink.Text;
                 textWriter.Write(txtNumbers);
             }
         }
@@ -234,9 +241,11 @@ namespace ParserApp
             naturalIds.Text = text;
             using (TextReader textReader = new StreamReader("path.txt", Encoding.UTF8))
             {
+                text = textReader.ReadLine();
+                textBoxPath.Text = text;
                 text = textReader.ReadToEnd();
+                textBoxLink.Text = text;
             }
-            textBoxPath.Text = text;
         }
     }
 }

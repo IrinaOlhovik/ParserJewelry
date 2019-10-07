@@ -120,4 +120,7 @@
   <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="textBoxLink.Text" xml:space="preserve">
+    <value>/almaty/search?filter%5BnomGroups%5D%5B0%5D=36&amp;filter%5BnomGroups%5D%5B1%5D=35&amp;filter%5BnomGroups%5D%5B2%5D=39&amp;filter%5BnomGroups%5D%5B3%5D=37&amp;filter%5BnomGroups%5D%5B4%5D=38&amp;filter%5BnomGroups%5D%5B5%5D=65&amp;filter%5BnomGroups%5D%5B6%5D=57&amp;filter%5BnomGroups%5D%5B7%5D=30&amp;filter%5BnomGroups%5D%5B8%5D=41&amp;filter%5BnomGroups%5D%5B9%5D=40&amp;filter%5BnomGroups%5D%5B10%5D=42&amp;filter%5BnomGroups%5D%5B11%5D=67&amp;filter%5BnomGroups%5D%5B12%5D=52&amp;filter%5BnomGroups%5D%5B13%5D=66&amp;filter%5BnomGroups%5D%5B14%5D=53&amp;filter%5BnomGroups%5D%5B15%5D=29&amp;filter%5BnomGroups%5D%5B16%5D=56&amp;filter%5BnomGroups%5D%5B17%5D=63&amp;filter%5BnomGroups%5D%5B18%5D=58&amp;filter%5BnomGroups%5D%5B19%5D=72&amp;filter%5BnomGroups%5D%5B20%5D=76&amp;filter%5Boptions%5D%5Bprobe%5D%5B0%5D=6&amp;filter%5Boptions%5D%5Bprobe%5D%5B1%5D=10&amp;filter%5Boptions%5D%5Bprobe%5D%5B2%5D=12&amp;filter%5Boptions%5D%5Bprobe%5D%5B3%5D=14</value>
+  </data>
 </root>
