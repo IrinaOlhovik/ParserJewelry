@@ -75,7 +75,12 @@ namespace ParserApp
             button3.Enabled = false;
             textBoxLink.Enabled = false;
             var path = textBoxPath.Text;
-            ParserConsole_2_.Parser.url = textBoxLink.Text;
+            var url = textBoxLink.Text;
+            if (url.Contains("https://tdserebro.ru"))
+                url = url.Replace("https://tdserebro.ru", String.Empty);
+            if(url.Contains("#filters"))
+                url = url.Replace("#filters", String.Empty);
+            ParserConsole_2_.Parser.url = url;
             MainClassWithLists.Jewelries = new List<Jewelry>();
            // MainClassWithLists.AddTemp = new List<Jewelry>();
             Stopwatch stopwatch = new Stopwatch();
